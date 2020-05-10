@@ -1,4 +1,4 @@
-package pl.bezdroznik.chesswebsocket.websocket;
+package pl.mtk.chess.websocket;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;

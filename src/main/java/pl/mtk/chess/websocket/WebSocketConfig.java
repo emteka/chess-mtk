@@ -1,4 +1,4 @@
-package pl.bezdroznik.chesswebsocket.websocket;
+package pl.mtk.chess.websocket;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

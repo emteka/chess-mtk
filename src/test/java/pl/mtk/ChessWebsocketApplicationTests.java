@@ -1,4 +1,4 @@
-package pl.bezdroznik.chesswebsocket;
+package pl.mtk;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

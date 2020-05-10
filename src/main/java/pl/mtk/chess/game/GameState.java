@@ -1,7 +1,9 @@
-package pl.bezdroznik.chesswebsocket.chess;
+package pl.mtk.chess.game;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.mtk.chess.game.analysis.Analysis;
+import pl.mtk.chess.websocket.SelectedTile;
 
 @Setter
 @Getter
@@ -16,7 +18,8 @@ public class GameState {
     Turn turn;
 
     public void analyze(SelectedTile selectedTile) {
-        // LECISZ PIŹDZIAK
+        Analysis analysis = new Analysis(this, selectedTile);
+        analysis.start(this, selectedTile);
     }
 
 }
