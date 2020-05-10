@@ -14,6 +14,7 @@ public class IsThisMoveAvailable {
         Tile selected = chessboard.getTile(selectedTile);
         if (moves.contains(selected)) {
             chessboard.move(selectedTile);
+            gameState.nextTurn();
         }
         chessboard.deselect();
     }

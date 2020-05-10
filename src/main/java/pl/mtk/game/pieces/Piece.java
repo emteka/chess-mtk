@@ -16,4 +16,5 @@ public abstract class Piece {
     }
 
     Color color;
+    boolean moved;
 }

@@ -21,10 +21,10 @@ public class Chessboard {
 
     public void selectTile(SelectedTile selectedTile) {
         getTile(selectedTile).setSelected(true);
-        setAvailableMoves();
+        setAvailableTiles();
     }
 
-    private void setAvailableMoves() {
+    private void setAvailableTiles() {
         Arrays.stream(rows).flatMap(Arrays::stream).forEach(tile -> tile.setAvailable(true));
     }
 
@@ -115,7 +115,6 @@ public class Chessboard {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-
          for (Tile[] row : rows) {
             for (Tile column : row) {
                 sb.append(column.toString())

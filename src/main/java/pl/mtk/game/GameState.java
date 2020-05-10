@@ -22,4 +22,8 @@ public class GameState {
         analysis.start(this, selectedTile);
     }
 
+    public void nextTurn() {
+        this.setTurn(this.turn.equals(Turn.WHITE) ? Turn.BLACK : Turn.WHITE);
+    }
+
 }
