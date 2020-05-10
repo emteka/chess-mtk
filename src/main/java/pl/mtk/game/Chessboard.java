@@ -1,9 +1,14 @@
-package pl.bezdroznik.chesswebsocket.chess;
+package pl.mtk.game;
 
 import lombok.Getter;
 import lombok.Setter;
-import pl.bezdroznik.chesswebsocket.chess.pieces.*;
+import pl.mtk.game.pieces.*;
+import pl.mtk.websocket.SelectedTile;
+
 import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 
 @Getter
 @Setter
@@ -12,6 +17,42 @@ public class Chessboard {
     private Tile[][] rows;
 
     private Chessboard() {
+    }
+
+    public void selectTile(SelectedTile selectedTile) {
+        getTile(selectedTile).setSelected(true);
+        setAvailableMoves();
+    }
+
+    private void setAvailableMoves() {
+        Arrays.stream(rows).flatMap(Arrays::stream).forEach(tile -> tile.setAvailable(true));
+    }
+
+    public Tile getTile(SelectedTile selectedTile) {
+        int row = mapToRow(selectedTile.getName().charAt(1));
+        int column = mapToColumn(selectedTile.getName().charAt(0));
+        return this.rows[row][column];
+    }
+
+    private int mapToRow(char row) {
+        return row - '1';
+    }
+
+    private int mapToColumn(char column) {
+        return Tile.columnToNumbers.get(column);
+    }
+
+    public boolean isAnyTileSelected() {
+        return Arrays.stream(this.rows)
+                .flatMap(Arrays::stream)
+                .anyMatch(Tile::isSelected);
+    }
+
+    public Set<Tile> getAvailableTiles() {
+        return Arrays.stream(this.rows)
+                .flatMap(Arrays::stream)
+                .filter(Tile::isAvailable)
+                .collect(Collectors.toSet());
     }
 
     public static Chessboard getStandardChessboard() {
@@ -83,5 +124,22 @@ public class Chessboard {
             sb.append("\n");
          }
          return sb.toString();
+    }
+
+
+    public void deselect() {
+        Arrays.stream(rows)
+                .flatMap(Arrays::stream)
+                .forEach(tile -> {  tile.setSelected(false);
+                                    tile.setAvailable(false); });
+    }
+
+    public void move(SelectedTile selectedTile) {
+        Arrays.stream(rows)
+                .flatMap(Arrays::stream)
+                .filter(Tile::isSelected)
+                .forEach(tile -> { getTile(selectedTile).setPiece(tile.getPiece());
+                    tile.setPiece(null);
+                });
     }
 }

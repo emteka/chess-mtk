@@ -6,16 +6,16 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.7.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
-	<groupId>pl.bezdroznik</groupId>
-	<artifactId>chess-websocket</artifactId>
+	<groupId>pl.mtk</groupId>
+	<artifactId>chess-mtk</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>chess-websocket</name>
-	<description>Demo project for Spring Boot</description>
+	<name>chess-mtk</name>
+	<description>Chess game using websockets</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>13</java.version>
 	</properties>
 
 	<dependencies>
@@ -99,8 +99,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>9</source>
-                    <target>9</target>
+                    <source>13</source>
+                    <target>13</target>
                 </configuration>
             </plugin>
         </plugins>

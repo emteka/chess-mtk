@@ -1,16 +1,12 @@
-package pl.bezdroznik.chesswebsocket.websocket;
+package pl.mtk.websocket;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import pl.bezdroznik.chesswebsocket.chess.GameState;
-import pl.bezdroznik.chesswebsocket.chess.SelectedTile;
+import pl.mtk.game.GameState;
 
-import javax.servlet.http.HttpSessionListener;
-import javax.websocket.OnOpen;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Map;
 
 
 @Controller
@@ -29,8 +25,12 @@ public class GameController {
     @MessageMapping("/move")
     @SendTo("/topic/board")
     public GameState move(SelectedTile selectedTile, SimpMessageHeaderAccessor headerAccessor) throws Exception {
-        GameState gameState = (GameState) headerAccessor.getSessionAttributes().get("gamestate");
-        gameState.analyze(selectedTile);
-        return gameState;
+        Map<String, Object> attributesMap = headerAccessor.getSessionAttributes();
+        if (attributesMap.containsKey("gamestate")) {
+            GameState gameState = (GameState) attributesMap.get("gamestate");
+            gameState.analyze(selectedTile);
+            return gameState;
+        }
+        return null;
     }
 }

@@ -1,4 +1,4 @@
-package pl.bezdroznik.chesswebsocket.chess;
+package pl.mtk.websocket;
 
 import lombok.Getter;
 import lombok.Setter;

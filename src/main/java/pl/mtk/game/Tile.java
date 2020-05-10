@@ -1,10 +1,9 @@
-package pl.bezdroznik.chesswebsocket.chess;
+package pl.mtk.game;
 
 import lombok.Getter;
 import lombok.Setter;
-import pl.bezdroznik.chesswebsocket.chess.pieces.Piece;
+import pl.mtk.game.pieces.Piece;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.Map.entry;
@@ -13,7 +12,7 @@ import static java.util.Map.entry;
 @Setter
 public class Tile {
 
-    private static final Map<Integer, String> columnNames = Map.ofEntries(
+    public static final Map<Integer, String> numbersToColumn = Map.ofEntries(
             entry(0,"A"),
             entry(1,"B"),
             entry(2,"C"),
@@ -23,9 +22,21 @@ public class Tile {
             entry(6,"G"),
             entry(7,"H"));
 
+    public static final Map<Character, Integer> columnToNumbers = Map.ofEntries(
+            entry('A', 0),
+            entry('B', 1),
+            entry('C', 2),
+            entry('D', 3),
+            entry('E', 4),
+            entry('F', 5),
+            entry('G', 6),
+            entry('H', 7));
+
     private Color color;
     private Piece piece;
     private String name;
+    private boolean selected;
+    private boolean available;
 
     private Tile(Color color) {
         this.color = color;
@@ -44,7 +55,7 @@ public class Tile {
     }
 
     public Tile setName(int row, int column) {
-        this.name = columnNames.get(column);
+        this.name = numbersToColumn.get(column);
         this.name += String.valueOf(row + 1);
         return this;
     }

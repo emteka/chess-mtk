@@ -36,10 +36,18 @@ function selectTile(name) {
 function update(gamestate) {
     for (var row of gamestate.chessboard.rows) {
         for(var tile of row) {
-            if (tile.piece != null) {
-                document.getElementById(tile.name).innerHTML = '<img src="img/' + tile.piece.color.substring(0, 1) + tile.piece.symbol + '.png">';
+            var element = document.getElementById(tile.name);
+            if (tile.selected) {
+                element.classList.add("selected");
             } else {
-                document.getElementById(tile.name).innerHTML = '';
+                if (element.classList.contains("selected")) {
+                    element.classList.remove("selected");
+                }
+            }
+            if (tile.piece != null) {
+                element.innerHTML = '<img src="img/' + tile.piece.color.substring(0, 1) + tile.piece.symbol + '.png">';
+            } else {
+                element.innerHTML = '';
             }
         }
     }
