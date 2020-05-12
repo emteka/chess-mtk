@@ -5,11 +5,11 @@ import pl.mtk.game.GameState;
 import pl.mtk.websocket.SelectedTile;
 
 public abstract class IsAnyTileAlreadySelected {
-    public static void analyze(GameState gameState, SelectedTile selectedTile) {
+    public static void analyze(GameState gameState, SelectedTile tile) {
         Chessboard chessboard = gameState.getChessboard();
         if (chessboard.isAnyTileSelected()) {
-            IsThisMoveAvailable.analyze(gameState, selectedTile);
+            IsThisMoveAvailable.analyze(gameState, tile);
         }
-        IsPlayersPieceJustSelected.analyze(gameState, selectedTile);
+        IsPlayersPieceJustSelected.analyze(gameState, tile);
     }
 }

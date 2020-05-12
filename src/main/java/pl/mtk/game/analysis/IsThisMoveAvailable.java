@@ -8,14 +8,14 @@ import pl.mtk.websocket.SelectedTile;
 import java.util.Set;
 
 public class IsThisMoveAvailable {
-    public static void analyze(GameState gameState, SelectedTile selectedTile) {
+    public static void analyze(GameState gameState, SelectedTile tile) {
         Chessboard chessboard = gameState.getChessboard();
         Set<Tile> moves = chessboard.getAvailableTiles();
-        Tile selected = chessboard.getTile(selectedTile);
-        if (moves.contains(selected)) {
+        Tile selectedTile = chessboard.getTile(tile);
+        if (moves.contains(selectedTile)) {
             chessboard.move(selectedTile);
             gameState.nextTurn();
         }
-        chessboard.deselect();
+        chessboard.deselectAllTiles();
     }
 }

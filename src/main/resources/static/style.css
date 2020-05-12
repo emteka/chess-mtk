@@ -34,3 +34,9 @@ img {
     -moz-box-shadow: inset 0px 0px 24px 0px rgba(115,134,255,1);
     box-shadow: inset 0px 0px 24px 0px rgba(115,134,255,1);
 }
+
+.available {
+    -webkit-box-shadow: inset 0px 0px 20px 0px rgba(94,255,0,0.8);
+    -moz-box-shadow: inset 0px 0px 20px 0px rgba(94,255,0,0.8);
+    box-shadow: inset 0px 0px 20px 0px rgba(94,255,0,0.8);
+}

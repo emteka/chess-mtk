@@ -5,14 +5,14 @@ import pl.mtk.websocket.SelectedTile;
 
 public class Analysis {
     GameState gameState;
-    SelectedTile selectedTile;
+    SelectedTile tile;
 
-    public Analysis(GameState gameState, SelectedTile selectedTile) {
+    public Analysis(GameState gameState, SelectedTile tile) {
         this.gameState = gameState;
-        this.selectedTile = selectedTile;
+        this.tile = tile;
     }
 
-    public void start(GameState gameState, SelectedTile selectedTile) {
-        IsAnyTileAlreadySelected.analyze(gameState, selectedTile);
+    public void start() {
+        IsAnyTileAlreadySelected.analyze(gameState, tile);
     }
 }

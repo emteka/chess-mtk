@@ -44,6 +44,14 @@ function update(gamestate) {
                     element.classList.remove("selected");
                 }
             }
+            if (tile.available) {
+                element.classList.add("available");
+            } else {
+                if (element.classList.contains("available")) {
+                    element.classList.remove("available");
+                }
+            }
+
             if (tile.piece != null) {
                 element.innerHTML = '<img src="img/' + tile.piece.color.substring(0, 1) + tile.piece.symbol + '.png">';
             } else {

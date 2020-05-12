@@ -1,5 +1,5 @@
 package pl.mtk.game;
 
-public enum Turn {
+public enum Color {
     WHITE, BLACK
 }
