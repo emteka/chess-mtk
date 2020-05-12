@@ -5,25 +5,26 @@ import lombok.Setter;
 import pl.mtk.game.analysis.Analysis;
 import pl.mtk.websocket.SelectedTile;
 
+import static pl.mtk.game.Color.*;
 @Setter
 @Getter
 public class GameState {
 
     public GameState() {
         this.chessboard = Chessboard.getStandardChessboard();
-        this.turn = Turn.WHITE;
+        this.turn = WHITE;
     }
 
     Chessboard chessboard;
-    Turn turn;
+    Color turn;
 
     public void analyze(SelectedTile selectedTile) {
         Analysis analysis = new Analysis(this, selectedTile);
-        analysis.start(this, selectedTile);
+        analysis.start();
     }
 
     public void nextTurn() {
-        this.setTurn(this.turn.equals(Turn.WHITE) ? Turn.BLACK : Turn.WHITE);
+        this.setTurn(this.turn.equals(WHITE) ? BLACK : WHITE);
     }
 
 }

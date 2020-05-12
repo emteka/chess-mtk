@@ -60,12 +60,36 @@ public class Tile {
         return this;
     }
 
+    public boolean containsPiece() { return piece != null; }
+
     @Override
     public String toString() {
         if (piece != null) {
             return piece.toString();
         }
         return color.toString();
+    }
+
+    public Position getPosition() {
+        return new Position(column(), row());
+    }
+
+    private int column() {
+        return columnToNumbers.get(this.getName().charAt(0));
+    }
+
+    private int row() {
+        return this.getName().charAt(1) - '1';
+    }
+
+    @Getter
+    public class Position {
+        int column, row;
+
+        public Position(int column, int row) {
+            this.column = column;
+            this.row = row;
+        }
     }
 }
 
