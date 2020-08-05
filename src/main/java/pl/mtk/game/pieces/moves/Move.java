@@ -1,96 +1,50 @@
 package pl.mtk.game.pieces.moves;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.*;
+import pl.mtk.game.Color;
+import pl.mtk.game.chessboard.Chessboard;
+import pl.mtk.game.chessboard.Tile;
+import pl.mtk.game.pieces.Piece;
 
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Setter
 public class Move {
 
-    @Getter
-    public enum Direction {
-        UP(0, 1),
-        UPRIGHT(1, 1),
-        RIGHT(1, 0),
-        DOWNRIGHT(1, -1),
-        DOWN(0, -1),
-        DOWNLEFT(-1, -1),
-        LEFT(-1, 0),
-        UPLEFT(-1, 1);
+    private Tile.Position origin, destination;
 
-        int horizontal, vertical;
+    public void make(Chessboard chessboard) {
+        Piece piece = chessboard.getTile(getOrigin())
+                .getPiece();
+        chessboard.getTile(getDestination())
+                .setPiece(piece);
+        piece.incrementMoves();
+        chessboard.getTile(getOrigin()).clearPiece();
+        chessboard.deselectAllTiles();
+    }
 
-        Direction(int horizontal, int vertical) {
-            this.horizontal = horizontal;
-            this.vertical = vertical;
+//    public boolean isWithinBounds(Chessboard chessboard) {
+//        return destination.getRow() >= 0 &&
+//                destination.getRow() <= 7 &&
+//                destination.getColumn() >= 0 &&
+//                destination.getColumn() <= 7;
+//    }
+
+    public boolean isValid(Chessboard chessboard) {
+        return  getDestination().getRow() >= 0 &&
+                getDestination().getRow() <= 7 &&
+                getDestination().getColumn() >= 0 &&
+                getDestination().getColumn() <= 7;
+    }
+
+    public boolean notContainsPieceOfSameColor(Chessboard chessboard) {
+        boolean containsPiece = chessboard.getTile(getDestination()).containsPiece();
+        if (containsPiece) {
+            return chessboard.getTile(getDestination()).getPiece().getColor()
+                    .equals(chessboard.getTile(getOrigin()).getColor());
         }
+        return true;
     }
 
-    int horizontal, vertical;
-    private boolean attacking = true;
-    private boolean friendly = true;
-
-    public Move(int factor, Direction direction) {
-        this.horizontal = direction.getHorizontal() * factor;
-        this.vertical = direction.getVertical() * factor;
-    }
-
-    public Move(int horizontal, int vertical) {
-        this.horizontal = horizontal;
-        this.vertical = vertical;
-    }
-
-    private  Move attacking() {
-        this.friendly = false;
-        return this;
-    }
-
-    private  Move friendly() {
-        this.attacking = false;
-        return this;
-    }
-
-    public static List<Move> getMoves( Direction direction) {
-        return getMoves(8, direction);
-    }
-
-    public static List<Move> getMoves(int limit, Direction direction) {
-        List<Move> moves = new ArrayList<>();
-        for (int i = 1; i <= limit; i++) {
-            moves.add(new Move(i, direction));
-        }
-        return moves;
-    }
-
-    public static List<Move> getAttackingMoves(int limit, Direction direction) {
-        List<Move> moves = new ArrayList<>();
-        for (int i = 1; i <= limit; i++) {
-            moves.add(new Move(i, direction).attacking());
-        }
-        return moves;
-    }
-
-    public static List<Move> getFriendlyMoves(int limit, Direction direction) {
-        List<Move> moves = new ArrayList<>();
-        for (int i = 1; i <= limit; i++) {
-            moves.add(new Move(i, direction).friendly());
-        }
-        return moves;
-    }
-
-    public static List<List<Move>> getKnightsMoves() {
-        List<List<Move>> moves = new ArrayList<>();
-        moves.add(List.of(new Move(1, 2)));
-        moves.add(List.of(new Move(1, -2)));
-        moves.add(List.of(new Move(-1, 2)));
-        moves.add(List.of(new Move(-1, -2)));
-        moves.add(List.of(new Move(2, 1)));
-        moves.add(List.of(new Move(-2, 1)));
-        moves.add(List.of(new Move(2, -1)));
-        moves.add(List.of(new Move(-2, -1)));
-        return moves;
-    }
 }

@@ -1,17 +1,27 @@
 package pl.mtk.game;
 
 import lombok.Getter;
-import lombok.Setter;
 import pl.mtk.game.analysis.Analysis;
+import pl.mtk.game.chessboard.Chessboard;
+import pl.mtk.game.chessboard.ChessboardUtils;
+import pl.mtk.game.chessboard.Tile;
 import pl.mtk.websocket.SelectedTile;
 
 import static pl.mtk.game.Color.*;
-@Setter
+import static pl.mtk.game.chessboard.Chessboard.getStandardChessboard;
+
 @Getter
 public class GameState {
 
-    public GameState() {
-        this.chessboard = Chessboard.getStandardChessboard();
+    public static GameState startNewGame() {
+        GameState gameState = new GameState(getStandardChessboard(), WHITE);
+//        Set<Move> moves = MoveProvider.getAllMoves(gameState);
+//        gameState.getChessboard().setMoves(moves);
+        return gameState;
+    }
+
+    private GameState(Chessboard chessboard, Color turn) {
+        this.chessboard = getStandardChessboard();
         this.turn = WHITE;
     }
 
@@ -19,12 +29,14 @@ public class GameState {
     Color turn;
 
     public void analyze(SelectedTile selectedTile) {
-        Analysis analysis = new Analysis(this, selectedTile);
+        Tile.Position position = ChessboardUtils.mapToPosition(selectedTile);
+        Analysis analysis = new Analysis(this, position);
         analysis.start();
     }
 
     public void nextTurn() {
-        this.setTurn(this.turn.equals(WHITE) ? BLACK : WHITE);
+        this.turn = (this.turn.equals(WHITE) ? BLACK : WHITE);
+//        chessboard.setMoves(MoveProvider.getAllMoves(this));
     }
 
 }

@@ -16,9 +16,9 @@ public class GameController {
     @SendTo("/topic/board")
     public GameState newGame(NewGameRequest newGameRequest, SimpMessageHeaderAccessor headerAccessor) throws Exception {
         String sessionId = headerAccessor.getSessionId();
-        GameState gameState = new GameState();
+        GameState gameState = GameState.startNewGame();
         headerAccessor.getSessionAttributes().put("gamestate", gameState);
-        System.out.println("new game created");
+        System.out.println("new game created" + sessionId);
         return gameState;
     }
 
@@ -26,9 +26,11 @@ public class GameController {
     @SendTo("/topic/board")
     public GameState move(SelectedTile selectedTile, SimpMessageHeaderAccessor headerAccessor) throws Exception {
         Map<String, Object> attributesMap = headerAccessor.getSessionAttributes();
+        String sessionId = headerAccessor.getSessionId();
         if (attributesMap.containsKey("gamestate")) {
             GameState gameState = (GameState) attributesMap.get("gamestate");
             gameState.analyze(selectedTile);
+            System.out.println(sessionId);
             return gameState;
         }
         return null;

@@ -34,7 +34,7 @@ function selectTile(name) {
 }
 
 function update(gamestate) {
-    for (var row of gamestate.chessboard.rows) {
+    for (var row of gamestate.chessboard.tiles) {
         for(var tile of row) {
             var element = document.getElementById(tile.name);
             if (tile.selected) {
