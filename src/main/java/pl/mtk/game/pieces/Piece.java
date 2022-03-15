@@ -1,23 +1,29 @@
 package pl.mtk.game.pieces;
 
-import lombok.Getter;
-import lombok.Setter;
 import pl.mtk.game.Color;
-import pl.mtk.game.pieces.moves.Move;
 
-import java.util.List;
-
-@Getter
-@Setter
 public abstract class Piece {
 
-    public Piece(Color color) {
-        this.color = color;
+    public enum PieceType {
+        ROOK('R'),
+        KNIGHT('N'),
+        BISHOP('B'),
+        QUEEN('Q'),
+        KING('K'),
+        PAWN('P');
+
+        public final char symbol;
+
+        PieceType(char symbol) {
+            this.symbol = symbol;
+        }
     }
 
-    public abstract List<List<Move>> allMoves();
+    public final PieceType pieceType;
+    public final Color color;
 
-    Color color;
-    boolean moved;
-    List<List<Move>> moves;
+    Piece(PieceType pieceType, Color color) {
+        this.pieceType = pieceType;
+        this.color = color;
+    }
 }
